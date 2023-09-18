@@ -9,11 +9,11 @@ type Kid struct {
 }
 
 type Teacher struct {
-	ID      uint64  `json:"id" gorm:"primaryKey;autoIncrement:false"`
-	Name    string  `json:"name"`
-	Surname string  `json:"surname"`
-	Grade   uint64  `json:"grade"`
-	Subject Subject `json:"subject"`
+	ID      uint64 `json:"id" gorm:"primaryKey;autoIncrement:false"`
+	Name    string `json:"name"`
+	Surname string `json:"surname"`
+	Grade   uint64 `json:"grade"`
+	Subject string `json:"subject"`
 }
 
 type Director struct {
@@ -22,5 +22,5 @@ type Director struct {
 }
 
 type Subject struct {
-	Name string `json:"name"`
+	Name string `json:"subj"`
 }
