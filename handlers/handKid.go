@@ -112,16 +112,16 @@ func Update(c *fiber.Ctx) error {
 		})
 	}
 	if query.Name != "" {
-		database.DB.Db.Model(&Kiddo).Update("name", query.Name)
+		database.DB.Db.Model(&Kiddo).Where("id = ?", needID).Update("name", query.Name)
 	}
 	if query.Surname != "" {
-		database.DB.Db.Model(&Kiddo).Update("surname", query.Surname)
+		database.DB.Db.Model(&Kiddo).Where("id = ?", needID).Update("surname", query.Surname)
 	}
 	if query.Age != 0 {
-		database.DB.Db.Model(&Kiddo).Update("age", query.Age)
+		database.DB.Db.Model(&Kiddo).Where("id = ?", needID).Update("age", query.Age)
 	}
 	if query.Grade != 0 {
-		database.DB.Db.Model(&Kiddo).Update("grade", query.Grade)
+		database.DB.Db.Model(&Kiddo).Where("id = ?", needID).Update("grade", query.Grade)
 	}
 	return c.Status(fiber.StatusOK).JSON(Kiddo)
 }

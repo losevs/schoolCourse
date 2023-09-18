@@ -37,28 +37,22 @@ func setupRoutes(app *fiber.App) {
 	dir.Post("/add", handlers.DirAdd)
 	dir.Delete("/del", handlers.DeleteDir)
 
-	//Teachers
+	//Teachers -> TOTEST
 	teach := app.Group("/teach")
 	teachShow := teach.Group("/show")
 	teachShow.Get("/", handlers.TeachShow)
-	// teachShow.Get("/:id") // -------------------------
-	// teachShow.Get("/sub/:subj") // ---------------------
-
+	teachShow.Get("/exact/:id", handlers.TeachShowID)
+	teachShow.Get("/sub", handlers.TeachShowSub)
 	teach.Post("/new", handlers.TeachAdd)
-
-	// teach.Delete("/delete/:id") // --------------------------
-
-	// teach.Patch("/update/:id") // --------------------------
+	teach.Delete("/delete/:id", handlers.TeachDelete)
+	teach.Patch("/update/:id", handlers.TeachUpdate)
 
 	//Kids
 	show := app.Group("/show")
 	show.Get("/", handlers.Show)
 	show.Get("/class/:grade", handlers.ShowGrade)
 	show.Get("/:id", handlers.ShowExact)
-
 	app.Post("/new", handlers.Create)
-
 	app.Delete("/delete/:id", handlers.Delete)
-
 	app.Patch("/update/:id", handlers.Update)
 }
