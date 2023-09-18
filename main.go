@@ -25,6 +25,11 @@ func main() {
 }
 
 func setupRoutes(app *fiber.App) {
+	subs := app.Group("/subs")
+	subs.Get("/show", handlers.ShowSubs)
+	subs.Post("/add", handlers.AddSub)
+	subs.Delete("/del", handlers.DelSub)
+
 	show := app.Group("/show")
 	show.Get("/", handlers.Show)
 	show.Get("/class/:grade", handlers.ShowGrade)
