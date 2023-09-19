@@ -39,7 +39,7 @@ func TeachAdd(c *fiber.Ctx) error {
 // Show All
 func TeachShow(c *fiber.Ctx) error {
 	query := []models.Teacher{}
-	if gormdb := database.DB.Db.Find(&query); gormdb.RowsAffected == 0 {
+	if gormdb := database.DB.Db.Order("id asc").Find(&query); gormdb.RowsAffected == 0 {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "there are no teachers in our school",
 		})
@@ -73,7 +73,7 @@ func TeachShowSub(c *fiber.Ctx) error {
 		})
 	}
 	result := []models.Teacher{}
-	if gormdb := database.DB.Db.Where("subject = ?", query.Name).Find(&result); gormdb.RowsAffected == 0 {
+	if gormdb := database.DB.Db.Where("subject = ?", query.Name).Order("id asc").Find(&result); gormdb.RowsAffected == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fmt.Sprintf("there is noone studying %s", query.Name),
 		})

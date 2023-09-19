@@ -4,6 +4,513 @@
 
 ### Отправление всех запросов осуществляется через программу Postman
 
+## Директор:
+
+#### POST
+
+**Добавление нового директора**
+
+Запрос на адрес localhost:80/dir/add
+
+Тело запроса: 
+
+``` json
+{
+    "name": "max",
+    "surname": "zuev"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "message": "new director updated!"
+}
+```
+
+Запрос (директор уже существует):
+
+Тело запроса: 
+
+``` json
+{
+    "name": "someone",
+    "surname": "xxx"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "director": {
+        "name": "max",
+        "surname": "zuev"
+    },
+    "message": "director already exists"
+}
+```
+
+#### GET
+
+**Просмотр существующего директора**
+
+Запрос на адрес localhost:80/dir/show
+
+Ответ:
+
+``` json
+{
+    "name": "max",
+    "surname": "zuev"
+}
+```
+
+Запрос (директора нет):
+
+Ответ:
+
+``` json
+{
+    "message": "there is no director"
+}
+```
+
+#### DELETE
+
+**Удаление существующего директора**
+
+Запрос на адрес localhost:80/dir/del
+
+Ответ:
+
+``` json
+{
+    "message": "director deleted successfully"
+}
+```
+
+Запрос (директора нет):
+
+``` json
+{
+    "message": "there is no director"
+}
+```
+
+## Предметы:
+
+#### POST
+
+**Добавление нового предмета**
+
+Запрос на адрес localhost:80/subs/add
+
+Тело запроса:
+
+``` json
+{
+    "subj": "Biology"
+}
+```
+
+Ответ: 
+
+``` json
+{
+    "subj": "Biology"
+}
+```
+
+Запрос (предмет уже существует):
+
+Тело запроса:
+
+``` json
+{
+    "subj": "Biology"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "message": "this subject already exists"
+}
+```
+
+#### GET
+
+**Просмотр всех доступных предметов**
+
+Запрос на адрес localhost:80/subs/show
+
+Ответ: 
+
+``` json
+[
+    {
+        "subj": "English"
+    },
+    {
+        "subj": "Russian"
+    },
+    {
+        "subj": "Maths"
+    },
+    {
+        "subj": "Biology"
+    }
+]
+```
+
+Запрос (предметов нет):
+
+Ответ:
+
+``` json
+{
+    "message": "there are no subjects"
+}
+```
+
+#### DELETE
+
+**Удаление предмета по имени**
+
+Запрос на адрес localhost:80/subs/del
+
+Тело запроса:
+
+``` json
+{
+    "subj": "Russian"
+}
+```
+
+Ответ: 
+
+``` json
+{
+    "message": "subject deleted successfully"
+}
+```
+
+Запрос (несуществующий предмет):
+
+Тело запроса:
+
+``` json
+{
+    "subj": "not a subject"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "message": "subject not a subject does not exists"
+}
+```
+
+## Преподаватели:
+
+#### POST
+
+**Добавление нового преподавателя**
+
+Запрос на адрес localhost:80/teach/new
+
+Тело запроса:
+
+``` json
+{
+    "id": 1,
+    "name": "Valery",
+    "surname": "Treyster",
+    "grade": 9,
+    "subject": "Biology"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "id": 1,
+    "name": "Valery",
+    "surname": "Treyster",
+    "grade": 9,
+    "subject": "Biology"
+}
+```
+
+Запрос (добавление пользователя с уже существующим ID):
+
+``` json
+{
+    "id": 1,
+    "name": "x",
+    "surname": "x",
+    "grade": 0,
+    "subject": "x"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "message": "teacher with this ID already exists",
+    "teacher": {
+        "id": 1,
+        "name": "Valery",
+        "surname": "Treyster",
+        "grade": 9,
+        "subject": "Biology"
+    }
+}
+```
+
+Запрос (добавление пользователя с недействительным названием предмета):
+
+``` json
+{
+    "id": 10,
+    "name": "x",
+    "surname": "x",
+    "grade": 0,
+    "subject": "subject_False"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "message": "subject subject_False does not exists in our school"
+}
+```
+
+#### GET
+
+**Просмотр всех существующих преподавателей**
+
+Запрос на адрес localhost:80/teach/show
+
+Ответ:
+
+``` json
+[
+    {
+        "id": 0,
+        "name": "Alexey",
+        "surname": "Korot",
+        "grade": 7,
+        "subject": "Russian"
+    },
+    {
+        "id": 1,
+        "name": "Valery",
+        "surname": "Treyster",
+        "grade": 9,
+        "subject": "Biology"
+    },
+    {
+        "id": 2,
+        "name": "someone",
+        "surname": "noone",
+        "grade": 11,
+        "subject": "Russian"
+    }
+]
+```
+
+**Просмотр преподавателя по ID**
+
+Запрос на адрес localhost:80/teach/show/exact/1
+
+Ответ:
+
+``` json
+{
+    "id": 1,
+    "name": "Valery",
+    "surname": "Treyster",
+    "grade": 9,
+    "subject": "Biology"
+}
+```
+
+Запрос (несуществующее ID):
+
+Ответ:
+
+``` json
+{
+    "message": "teacher with id=999 does not exist"
+}
+```
+
+**Просмотр преподавателей по предмету**
+
+Запрос на адрес localhost:80/teach/show/sub
+
+Тело запроса:
+
+``` json
+{
+    "subj": "Russian"
+}
+```
+
+Ответ:
+
+``` json
+[
+    {
+        "id": 0,
+        "name": "Alexey",
+        "surname": "Korot",
+        "grade": 7,
+        "subject": "Russian"
+    },
+    {
+        "id": 2,
+        "name": "someone",
+        "surname": "noone",
+        "grade": 11,
+        "subject": "Russian"
+    }
+]
+```
+
+Запрос (несуществующий предмет / предмет, который никто не ведет):
+
+Тело запроса:
+
+``` json
+{
+    "subj": "subj"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "message": "there is noone studying subj"
+}
+```
+
+#### DELETE
+
+**Удаление преподавателя по ID**
+
+Запрос на адрес localhost:80/teach/delete/1
+
+Ответ:
+
+``` json
+{
+    "message": "teacher deleted successfully"
+}
+```
+
+Запрос Запрос на адрес localhost:80/teach/delete/999 (несуществующий ID):
+
+``` json
+{
+    "message": "there is noone with id=999"
+}
+```
+
+#### PATCH
+
+**Обновление преподавателя по ID**
+
+Запрос на адрес localhost:80/teach/update/0
+
+*При отсутствии явного указания полей будут оставаться старые*
+
+*id указывать не нужно, в примере указан для наглядности*
+
+Тело запроса:
+
+``` json
+{
+        "id": 100,
+        "name": "name",
+        "surname": "surname",
+        "grade": 1,
+        "subject": "Maths"
+    }
+```
+
+Ответ:
+
+``` json
+{
+    "id": 0,
+    "name": "name",
+    "surname": "surname",
+    "grade": 1,
+    "subject": "Maths"
+}
+```
+
+Запрос на адрес localhost:80/teach/update/999 (несуществующий ID):
+
+Тело запроса:
+
+``` json
+{
+        "id": 100,
+        "name": "name",
+        "surname": "surname",
+        "grade": 1,
+        "subject": "Maths"
+    }
+```
+
+Ответ:
+
+``` json
+{
+    "message": "there is noone with id=999"
+}
+```
+
+Запрос на адрес localhost:80/teach/update/0 (несуществующий предмет):
+
+Тело запроса:
+
+``` json
+{
+        "subject": "false_subject"
+}
+```
+
+Ответ:
+
+``` json
+{
+    "message": "subject false_subject does not exists in our school",
+    "new teacher": {
+        "id": 0,
+        "name": "name",
+        "surname": "surname",
+        "grade": 1,
+        "subject": "Maths"
+    }
+}
+```
+
+## Обучающиеся:
+
 #### POST
 
 **Добавление нового пользователя**
@@ -12,7 +519,7 @@
 
 Тело запроса:
 
-```
+``` json
 {
     "id": 0,
     "name": "Losev",
@@ -24,7 +531,7 @@
 
 Ответ:
 
-```
+``` json
 {
     "id": 0,
     "name": "Losev",
@@ -36,7 +543,7 @@
 
 Запрос (добавление пользователя с уже существующим ID):
 
-```
+``` json
 {
     "id": 0,
     "name": "Losev",
@@ -48,7 +555,7 @@
 
 Ответ:
 
-```
+``` json
 {
     "kid": {
         "id": 0,
@@ -69,7 +576,7 @@
 
 Ответ:
 
-```
+``` json
 [
     {
         "id": 0,
@@ -157,7 +664,7 @@
 
 Ответ:
 
-```
+``` json
 [
     {
         "id": 6,
@@ -187,7 +694,7 @@
 
 Ответ:
 
-```
+``` json
 {
     "message": "Class 111 is empty"
 }
@@ -199,7 +706,7 @@
 
 Ответ:
 
-```
+``` json
 {
     "id": 0,
     "name": "Losev",
@@ -211,7 +718,7 @@
 
 Запрос на адрес localhost:80/show/111 (несуществующий ID)
 
-```
+``` json
 {
     "message": "there is no kid with that id"
 }
@@ -225,7 +732,7 @@
 
 Ответ:
 
-```
+``` json
 {
     "message": "kid deleted succsessfully!"
 }
@@ -235,7 +742,7 @@
 
 Ответ:
 
-```
+``` json
 {
     "message": "there is no kids with this id"
 }
@@ -253,7 +760,7 @@
 
 Запрос:
 
-```
+``` json
 {
     "id": 200,
     "name": "Sergey",
@@ -265,7 +772,7 @@
 
 Ответ:
 
-```
+``` json
 {
     "id": 0,
     "name": "Sergey",
@@ -279,7 +786,7 @@
 
 Запрос:
 
-```
+``` json
 {
     "id": 200,
     "name": "Sergey",
@@ -291,7 +798,7 @@
 
 Ответ:
 
-```
+``` json
 {
     "message": "there is no kid with this ID"
 }
