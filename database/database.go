@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"school/models"
@@ -18,13 +17,7 @@ type Dbinstance struct {
 var DB Dbinstance
 
 func ConnectDb() {
-	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable",
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASS"),
-		os.Getenv("DB_NAME"),
-	)
+	dsn := os.Getenv("DSN")
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})

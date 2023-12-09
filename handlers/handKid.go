@@ -32,7 +32,7 @@ func Create(c *fiber.Ctx) error {
 func Show(c *fiber.Ctx) error {
 	sample := []models.Kid{}
 	if dbGorm := database.DB.Db.Order("id asc").Find(&sample); dbGorm.RowsAffected == 0 {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "empty",
 		})
 	}
